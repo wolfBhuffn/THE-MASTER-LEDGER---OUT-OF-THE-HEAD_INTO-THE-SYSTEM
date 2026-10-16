@@ -1,14 +1,13 @@
+import argparse
 from pathlib import Path
 from datetime import datetime
 
-def process_packet(filename: str, decision: str, notes: str = ""):
-    outbox = Path("05_Handoff_Staging/Outbox_To_Boss")
+def process_packet(packet_path: Path, decision: str = "APPROVE", notes: str = "Automatically approved by Boss Agent event loop."):
     approved_dir = Path("05_Handoff_Staging/Approved_Ready_To_Deploy")
     revisions_dir = Path("05_Handoff_Staging/Revisions_Requested")
     
-    packet_path = outbox / filename
     if not packet_path.exists():
-        print(f"Error: Packet '{filename}' not found in Outbox.")
+        print(f"Error: Packet '{packet_path.name}' not found.")
         return
 
     content = packet_path.read_text()
@@ -46,13 +45,15 @@ def process_packet(filename: str, decision: str, notes: str = ""):
     packet_path.write_text(content)
     
     # Move file to the correct destination folder
-    target_path = target_dir / filename
+    target_path = target_dir / packet_path.name
     packet_path.rename(target_path)
     print(f"Boss Agent Action: Packet successfully moved to {target_path}")
 
 if __name__ == "__main__":
-    process_packet(
-        filename="20261015_MASTER_LEDGER_SETUP_Handoff.md",
-        decision="APPROVE",
-        notes="All workspace assets and metadata look solid. Ready for deployment."
-    )
+    parser = argparse.ArgumentParser(description="Process and review a handoff packet.")
+    parser.add_argument("--packet", type=str, required=True, help="Path to the handoff packet markdown file.")
+    parser.add_argument("--decision", type=str, default="APPROVE", help="Decision: APPROVE or REJECT")
+    parser.add_argument("--notes", type=str, default="Verified via Automated Event Loop.", help="Review notes.")
+    
+    args = parser.parse_args()
+    process_packet(Path(args.packet), args.decision, args.notes)
