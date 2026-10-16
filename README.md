@@ -1,3 +1,4 @@
+
 # The Master Ledger — Out of the Head, Into the System
 
 A multi-agent automation pipeline designed to capture tasks, route them through specialized agent channels, validate output, and log every execution step into a structured system.
