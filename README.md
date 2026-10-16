@@ -1,19 +1,18 @@
-# THE MASTER LEDGER: OUT OF THE HEAD, INTO THE SYSTEM
+# The Master Ledger — Out of the Head, Into the System
 
-> A multi-agent backend pipeline, automated file-watching framework, and git-integrated synchronization engine designed to capture, structure, and execute life and system operations seamlessly.
+A multi-agent automation pipeline designed to capture tasks, route them through specialized agent channels, validate output, and log every execution step into a structured system.
 
 ---
 
-## 🏗️ System Architecture & File Structure
+## 🏗 System Architecture
 
-```text
-THE-MASTER-LEDGER/
-├── 05_Handoff_Staging/       # Dynamic payload holding and transit directory
-├── .gitignore                # Excludes sensitive keys, logs, and temp cache
-├── boss_review.py            # AI agent oversight and validation loop
-├── create_packet.py          # Automated transaction and task packet builder
-├── hiring_manager.py         # Administrative routing and queue allocation
-├── master_ledger.py          # Core logging, state management, and telemetry
-├── send_packet_email.py      # Automated notification and dispatch bridge
-├── setup_staging.py          # Environment and local folder initialization
-└── visual_inspector.py       # Pipeline inspection and status visualization
+```mermaid
+graph TD
+    A[Task Input / Manual Entry] --> B[setup_staging.py]
+    B --> C[create_packet.py]
+    C --> D[Handoff Packet Generated]
+    D --> E[Boss Agent / Router]
+    E --> F[Specialized AI Agents / +CLAUDE]
+    F --> G[Visual Inspector / Validation]
+    G --> H[send_packet_email.py]
+    H --> I[Master Ledger Logged]
