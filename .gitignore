@@ -1,0 +1,8 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.env
+
+# Environment / OS
+.DS_Store
+.vscode/
