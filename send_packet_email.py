@@ -24,9 +24,10 @@ def dispatch_handoff_packet(filename: str, sender_tag: str, app_password: str = 
     # Email configurations
     sender_email = f"kwamelockley.91+{sender_tag}@gmail.com"
     boss_email = "kwamelockley.91+boss@gmail.com"
-    
+    is_github = os.getenv("GITHUB_ACTIONS") == "true"
+    runner_tag = "[Cloud Runner / iOS]" if is_github else "[macOS Local Watchdog]"
     msg = EmailMessage()
-    msg['Subject'] = f"📦 HANDOFF PACKET SUBMISSION: {filename}"
+    msg['Subject'] = f"{runner_tag} HANDOFF PACKET SUBMISSION: {filename}"
     msg['From'] = sender_email
     msg['To'] = boss_email
     
