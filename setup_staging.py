@@ -1,18 +1,12 @@
-from pathlib import Path
+import glob 
+import os 
 
-def setup_handoff_staging():
-    # Define the base directory and subdirectories
-    base_dir = Path("05_Handoff_Staging")
-    subdirs = [
-        base_dir / "Outbox_To_Boss",
-        base_dir / "Approved_Ready_To_Deploy",
-        base_dir / "Revisions_Requested"
-    ]
+def
+get_unprocessed_notes(staging_dir="05_Handoff_Staging"): 
+    """Scans staging directory for Markdown notes.""" 
+    pattern = os.path.join(staging_dir, "task_*.md") 
+    notes = glob.glob(pattern) return sorted(notes) 
     
-    # Create directories if they don't already exist
-    for folder in subdirs:
-        folder.mkdir(parents=True, exist_ok=True)
-        print(f"Directory ready: {folder}")
-
-if __name__ == "__main__":
-    setup_handoff_staging()
+    if __name__ == "__main__": 
+    pending = get_unprocessed_notes()
+    print(f"Found {len(pending)} pending note(s) in staging.")
