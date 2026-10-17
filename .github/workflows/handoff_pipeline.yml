@@ -22,18 +22,22 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         pip3 install watchdog google-genai python-dotenv
-
-
-    - name: Run Test Suite
+        
+       - name: Run Test Suite
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       run: |
         python3 test_pipeline.py
-        
+
     - name: Process Staged Mobile Notes
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       run: |
-        python3 boss_review.py
+        for file in 05_Handoff_Staging/Outbox_To_Boss/*.md; do
+          if [ -f "$file" ]; then
+            echo "Processing $file..."
+            python3 boss_review.py --packet "$file"
+          fi
+        done
